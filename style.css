@@ -1,0 +1,28 @@
+
+table.type01 {
+	border-collapse: collapse;
+	text-align: left;
+	line-height: 1.5;
+	border: 1px solid #ccc;
+}
+
+table.type01 thead th {
+	padding: 5px;
+	font-weight: bold;
+	text-align: center;
+	border: 1px solid #ccc;
+	background: #eee;
+}
+
+table.type01 tbody th {
+	padding: 5px;
+	font-style: italic;
+	vertical-align: top;
+	border: 1px solid #ccc;
+}
+
+table.type01 tbody td {
+	padding: 5px;
+	vertical-align: top;
+	border: 1px solid #ccc;
+}
