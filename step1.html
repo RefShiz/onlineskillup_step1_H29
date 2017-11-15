@@ -6,15 +6,22 @@
 	<link rel="stylesheet" type="text/css" href="./style.css">
 	<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.1/jquery.min.js"></script>
 </head>
-<body style="padding: 1vh;">
-	<h2>掲示板</h2>
-	<div id="" style="color: green; margin: 1vh"></div>
+<body>
 
-	<label>Name :</label><br>
-	<input id="name" type="text" required><br>
-	<label>Message :</label><br>
-	<textarea id="message" rows="4" cols="40" placeholder="ここにメッセージを入力してください。" autocomplete="off" required></textarea><br>
-	<button id="send" type="button">投稿</button>
+	<h2>掲示板</h2>
+	<label>Name : (20)</label>
+	<br>
+	<input id="name" type="text" required>
+	<br>
+	<label>Message : (200)</label>
+	<br>
+	<textarea id="message" rows="4" cols="40" placeholder="ここにメッセージを入力してください。" autocomplete="off" required></textarea>
+	<br>
+	<button id="send">投稿</button>
+	<br>
+	<pre id="error"></pre>
+	<br>
+
 	<hr>
 	<table id="board" class="type01">
 		<thead><tr><th>Time</th><th>Name</th><th>Message</th></tr></thead>
@@ -22,28 +29,39 @@
 	</table>
 
 	<script type="text/javascript">
+		//----------クリックイベント----------
 		$(function() {
 			$("#send").click(function(){
-				var name = $("#name").val();
-				var message = $("#message").val();
-				$.ajax({
-					type: "POST",
-					url: "step1_insert.php",
-					data: {
-						"name": name,
-						"message": message
-					},
-					success: function(data){
-						console.log('send post!');
-						$("message").remove();
+				var name = $("#name").val().toString();
+				var message = $("#message").val().toString();
+				// 値があるかチェック
+				if (name == "" || message == "") {
+					$("#error").text("入力してください。");
+				} else {
+					// 文字数チェック
+					if (name.length <= 20 && message.length <= 200) {
+						$.ajax({
+							type: "POST",
+							url: "step1_insert.php",
+							data: {
+								"name": name,
+								"message": message
+							},
+							success: function(data){
+								console.log('send post!');
+								$("#message").val("");
+								$("#error").text("送信しました。");
+								setTimeout(function(){$("#error").text("");},2000);
+							}
+						});
+					} else {
+						$("#error").text("文字数が不正です。");
 					}
-				});
+				}
 			});
 		});
-	</script>
 
-	<script type="text/javascript">
-		// リアルタイム更新 ポーリング
+		//----------リアルタイム更新 ポーリング----------
 		$(function() {
 			var POLLLING_INVERVAL_TIME_IN_MILLIS = 1000;//1s
 			(function polling() {
@@ -65,10 +83,12 @@
 					var inner_data = "";
 					// テーブルhtmlを作成
 					for (var i = j_data.length - 1; i >= 0; i--) {
+						// 改行コードを<br>に
+						inner_data = inner_data.replace("\n","<br>");
 						inner_data += "<tr><td>"+j_data[i]["date"]+"</td><td>"+j_data[i]["name"]+"</td><td>"+j_data[i]["message"]+"</td></tr>"
 					}
-					// テーブルhtmlが同じではないとき
-					if ( inner_data != $("table#board tbody").html() ) {
+					// テーブル内のhtmlが同じではないときに更新
+					if ( inner_data != escape_html_for_funchtml($("table#board tbody").html()) ) {
 						$("table#board tbody *").remove(); //全削除
 						$("table#board tbody").append(inner_data); //追加
 					}
@@ -78,6 +98,36 @@
 				});
 			}
 		});
+
+		//----------関数----------
+		// HTMLエスケープ
+		function escape_html (string) {
+			if(typeof string !== 'string') {
+				return string;
+			}
+			return string.replace(/[&'`"<>]/g, function(match) {
+				return {
+					'&': '&amp;',
+					"'": '&#x27;',
+					'`': '&#x60;',
+					'"': '&quot;',
+					'<': '&lt;',
+					'>': '&gt;',
+				}[match]
+			});
+		}
+		// HTMLエスケープ (関数.html()のための)
+		function escape_html_for_funchtml (string) {
+			if(typeof string !== 'string') {
+				return string;
+			}
+			return string.replace(/['"]/g, function(match) {
+				return {
+					"'": '&#x27;',
+					'"': '&quot;',
+				}[match]
+			});
+		}
 	</script>
 
 </body>
