@@ -1,15 +1,13 @@
 -- phpMyAdmin SQL Dump
--- version 4.7.1
--- https://www.phpmyadmin.net/
+-- version 4.6.0
+-- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Generation Time: 2017 年 11 月 15 日 00:07
--- サーバのバージョン： 5.5.52-MariaDB
--- PHP Version: 7.1.11
+-- Generation Time: 2017 年 11 月 17 日 17:22
+-- サーバのバージョン： 5.7.17-log
+-- PHP Version: 5.6.29
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
-SET AUTOCOMMIT = 0;
-START TRANSACTION;
 SET time_zone = "+00:00";
 
 
@@ -39,8 +37,10 @@ CREATE TABLE `board` (
 --
 
 INSERT INTO `board` (`date`, `name`, `message`) VALUES
-('2017-11-14 23:46:23', 'Tag_Test', '&lt;font color=&quot;#00ff00&quot;&gt;あいうえお&lt;/font&gt;');
-COMMIT;
+('2017-11-14 23:46:23', 'Tag_Test', '&lt;font color=&quot;#00ff00&quot;&gt;あいうえお&lt;/font&gt;'),
+('2017-11-15 09:33:29', 'a', 'a'),
+('2017-11-15 09:48:26', 'あいうえお', 'あいうえお\nかきくけこ\nさしすせそ'),
+('2017-11-16 08:24:57', 'th', 'hoge\nfuga\npiyo');
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;

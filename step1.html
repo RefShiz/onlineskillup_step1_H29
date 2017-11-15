@@ -4,7 +4,7 @@
 	<title>BOARD</title>
 	<meta charset="utf-8">
 	<link rel="stylesheet" type="text/css" href="./style.css">
-	<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.1/jquery.min.js"></script>
+	<script type="text/javascript" src="./js/jquery-3.2.1.min.js"></script>
 </head>
 <body>
 
@@ -17,16 +17,12 @@
 	<br>
 	<textarea id="message" rows="4" cols="40" placeholder="ここにメッセージを入力してください。" autocomplete="off" required></textarea>
 	<br>
-	<button id="send">投稿</button>
+	<button id="send"><p>投稿</p></button>
 	<br>
 	<pre id="error"></pre>
-	<br>
 
 	<hr>
-	<table id="board" class="type01">
-		<thead><tr><th>Time</th><th>Name</th><th>Message</th></tr></thead>
-		<tbody></tbody>
-	</table>
+	<div id="board"></div>
 
 	<script type="text/javascript">
 		//----------クリックイベント----------
@@ -85,12 +81,14 @@
 					for (var i = j_data.length - 1; i >= 0; i--) {
 						// 改行コードを<br>に
 						inner_data = inner_data.replace("\n","<br>");
-						inner_data += "<tr><td>"+j_data[i]["date"]+"</td><td>"+j_data[i]["name"]+"</td><td>"+j_data[i]["message"]+"</td></tr>"
+						inner_data += "<div class=\"b_content\">"+j_data[i]["date"]+"<br>Name: "+j_data[i]["name"]+"<br>"+j_data[i]["message"]+"<br></div><hr>"
 					}
 					// テーブル内のhtmlが同じではないときに更新
-					if ( inner_data != escape_html_for_funchtml($("table#board tbody").html()) ) {
-						$("table#board tbody *").remove(); //全削除
-						$("table#board tbody").append(inner_data); //追加
+					//console.log(escape_html_for_funchtml(inner_data));
+					//console.log(escape_html_for_funchtml($("div#board").html()));
+					if ( escape_html_for_funchtml(inner_data) != escape_html_for_funchtml($("div#board").html()) ) {
+						$("div#board").html(""); //全削除
+						$("div#board").html(inner_data); //追加
 					}
 				}).fail(function(jqXHR, textStatus) {
 					console.log(jqXHR);

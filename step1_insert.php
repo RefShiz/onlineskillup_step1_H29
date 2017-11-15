@@ -8,7 +8,6 @@ define('DB_PASSWORD','teamlab843');
 define('TABLE_NAME', 'board');
 
 // 整合性チェック
-// 入力がNULLの場合は考慮しない
 if ( isset($_POST["name"]) && isset($_POST["message"]) ) {
 	// POSTデータを文字列として展開する
 	$name = (string)$_POST["name"];
@@ -25,6 +24,7 @@ if ( isset($_POST["name"]) && isset($_POST["message"]) ) {
 	if ( mb_strlen($name) >= 20 || mb_strlen($message) >= 200 ) {
 		$error = "文字数が多すぎます。";
 	}
+/*全角半角スペースのみの入力の場合の処理をしていない*/
 
 // エラーがあった場合に表示
 if ( isset($error) ) {

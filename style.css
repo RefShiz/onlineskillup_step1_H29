@@ -1,8 +1,7 @@
 
 /*----------BODY----------*/
 body {
-	text-align: center;
-	padding: 1vh;
+	padding: 1vw;
 }
 
 /*----------INPUT----------*/
@@ -34,8 +33,9 @@ textarea:focus {
 
 /*----------BUTTON----------*/
 button#send {
+	font-size: 1em;
 	font-weight: bold;
-	padding: 2px;
+	padding: 1px;
 	width: 60vw;
 	-webkit-border-radius: 3px;
 	-moz-border-radius: 3px;
@@ -46,32 +46,10 @@ button#send:focus {
 	outline: 0;
 }
 
-
-/*----------TABLE----------*/
-table.type01 {
-	border-collapse: collapse;
-	text-align: left;
-	line-height: 1.5;
-	border: 1px solid #ccc;
-}
-
-table.type01 thead th {
-	padding: 5px;
-	font-weight: bold;
+/*----------ERROR(PRE)----------*/
+pre#error {
+	height: 1em;
+	width: 60vw;
 	text-align: center;
-	border: 1px solid #ccc;
-	background: #eee;
 }
 
-table.type01 tbody th {
-	padding: 5px;
-	font-style: italic;
-	vertical-align: top;
-	border: 1px solid #ccc;
-}
-
-table.type01 tbody td {
-	padding: 5px;
-	vertical-align: top;
-	border: 1px solid #ccc;
-}
